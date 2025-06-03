@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectSODV
 {
-    class Program //testing one two three
+    class Program //test
     {
         static void Main(string[] args)
         {
