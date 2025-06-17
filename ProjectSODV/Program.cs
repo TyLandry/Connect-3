@@ -216,3 +216,6 @@ namespace ProjectSODV
         }
     }
 }
+
+//we used chatgpt to research ways to do some methods, such as the diagonal checks, but not to write the code.
+//we also used w3schools for research on proper ways to implement certain lines of code.
