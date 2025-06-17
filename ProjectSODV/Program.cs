@@ -2,14 +2,7 @@
 
 namespace ProjectSODV
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            GameFlow game = new GameFlow(); // starts program. gameflow is an object and calls start() to begin game.
-            game.Start();
-        }
-    }
+
     public class Player
     {
         public string Name { get; set; }
@@ -160,6 +153,7 @@ namespace ProjectSODV
             {
                 board.Reset(); // clear board
                 bool gameOver = false;
+
                 while (!gameOver) // continues loop until player wins 
                 {
                     board.Display();
@@ -168,11 +162,57 @@ namespace ProjectSODV
 
                     if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7")
                     {
+
                         int column = int.Parse(input); // parse converts a string into a #
+                        if (!board.Drop(column - 1, currentPlayer.Symbol)) // board.Drop places current players symbol into column.
+                        {
+                            Console.WriteLine("That column is full, try another."); // error
+                            continue;
+
+                        }
+
+                        if (board.WinnerCheck(currentPlayer.Symbol)) // checks if current move caused a win.
+                        {
+                            board.Display(); // if true, board announces winner.
+                            Console.WriteLine(currentPlayer.Name + "wins!");
+                            gameOver = true;
+                            continue;
+                        }
+
+                        if (board.BoardFull()) // checks if all columns are full, if true = tie.
+                        {
+                            board.Display();
+                            Console.WriteLine("Tie!");
+                            gameOver = true;
+                            continue;
+                        }
+
+                        currentPlayer = (currentPlayer == player1) ? player2 : player1; // this switches turns between players.
+
                     }
                     else
                     {
-                        Console.WriteLine("That column is full, try another."); // error
+                        Console.WriteLine("Invalid input. Choose 1-7."); // errors msg if wrong input is written.
                     }
+
                 }
-            }
+
+
+                Console.Write("Play again? y/n: ");
+                PlayAgain = Console.ReadLine().ToLower() == "y"; // when game ends, asks player to start new game.
+
+            } while (PlayAgain);
+
+        }
+    }
+    class Program
+
+    {
+        static void Main(string[] args)
+        {
+
+            GameFlow game = new GameFlow(); // starts program. gameflow is an object and calls start() to begin game.
+            game.Start();
+        }
+    }
+}
